@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Navigate to the backend directory
 cd "$(dirname "$0")"

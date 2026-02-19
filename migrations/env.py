@@ -58,7 +58,7 @@ async def run_async_migrations() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
-        connect_args={"ssl": True} if "aivencloud.com" in (os.environ.get("DATABASE_URL") or "") else {}
+        connect_args={"ssl": {"ca": None}} if "aivencloud.com" in (os.environ.get("DATABASE_URL") or "") else {}
     )
 
     async with connectable.connect() as connection:

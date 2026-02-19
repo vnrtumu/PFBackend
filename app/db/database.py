@@ -7,10 +7,14 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Handle None or empty string
+if not DATABASE_URL:
+    DATABASE_URL = "mysql+aiomysql://root:password@localhost/expense_tracker"
+
 engine = create_async_engine(
     DATABASE_URL, 
     echo=True,
-    connect_args={"ssl": True} if "aivencloud.com" in DATABASE_URL else {}
+    connect_args={"ssl": {"ca": None}} if "aivencloud.com" in DATABASE_URL else {}
 )
 AsyncSessionLocal = sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
